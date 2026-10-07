@@ -63,7 +63,7 @@ def main(argv: list[str] | None = None) -> None:
     d.add_argument("--to", dest="end", required=True)
     d.add_argument("--out", default="data/XAUUSD_M1.parquet")
     d.add_argument("--cache", default="data/cache")
-    d.add_argument("--workers", type=int, default=8)
+    d.add_argument("--workers", type=int, default=2)
     d.set_defaults(func=cmd_download)
 
     m = sub.add_parser("import-mt5", help="import a MetaTrader 5 'Export bars' CSV")

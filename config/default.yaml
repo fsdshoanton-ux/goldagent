@@ -1,0 +1,50 @@
+# GoldAgent configuration. All times are UTC.
+# Risk section is human-owned: the AI reviewer must never propose changes to it.
+
+instrument:
+  symbol: XAUUSD
+  contract_size: 100        # 1.00 lot = 100 oz; 0.01 lot -> $1 P&L per $1 move
+  min_lot: 0.01
+  lot_step: 0.01
+  max_lot: 1.0
+
+costs:
+  default_spread: 0.30      # USD, used when data has no spread column
+  commission_per_lot: 7.0   # USD per 1.00 lot, round turn
+  slippage: 0.05            # USD per fill, against us
+
+risk:
+  risk_per_trade: 0.005             # 0.5% of balance per trade
+  daily_loss_limit: 0.10            # stop trading for the day at -10%
+  max_consecutive_losses: 6         # stop trading for the day after 6 losses in a row
+  weekly_loss_limit: 0.15           # stop trading for the week at -15%
+  kill_switch_drawdown: 0.30        # halt the bot at -30% from equity peak
+  max_open_positions: 1
+
+backtest:
+  initial_balance: 1000.0
+  timeframe: 5min
+  flat_hour: 20                     # force-close any position at/after this hour
+  friday_flat_hour: 19              # earlier flat on Friday (weekend gap protection)
+
+strategy:
+  name: session_breakout
+  params:
+    asia_start_hour: 0
+    asia_end_hour: 7
+    entry_windows: [[7, 10], [12, 15]]   # London open, New York open
+    breakout_buffer_atr: 0.10
+    atr_period: 14
+    trend_fast: 50
+    trend_slow: 200
+    sl_atr_mult: 1.5
+    tp_r: 2.0
+    breakeven_r: 1.0
+    max_hold_bars: 36                # 3 hours on M5
+    max_trades_per_day: 2
+    min_range_atr: 2.0               # Asian range must be at least 2 x ATR(M5)
+    max_range_atr: 15.0
+    atr_regime_lookback: 2880        # ~10 trading days of M5 bars
+    atr_regime_min: 0.5              # ATR / rolling median ATR
+    atr_regime_max: 2.5
+    max_spread: 0.60

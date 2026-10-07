@@ -1,0 +1,32 @@
+[project]
+name = "goldagent"
+version = "0.1.0"
+description = "Conservative intraday scalping agent for XAUUSD with an AI trade reviewer"
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy>=1.26",
+    "pandas>=2.1",
+    "pydantic>=2.5",
+    "pyyaml>=6.0",
+    "pyarrow>=14",
+    "requests>=2.31",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+ai = ["anthropic>=0.40"]
+mt5 = ["MetaTrader5>=5.0.45; platform_system == 'Windows'"]
+
+[project.scripts]
+goldagent = "goldagent.cli:main"
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+include = ["goldagent*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
